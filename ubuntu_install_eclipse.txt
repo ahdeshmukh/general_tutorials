@@ -1,0 +1,39 @@
+INSTALL ECLIPSE ON UBUNTU (16.04)
+
+First make sure java is installed. Inside a terminal type java -version. If it is not installed, we will get an error saying java not found. If it is installed, we will get output like openjdk version "1.8.0_91" and some other info
+
+If java is not installed, install it (basically install jdk) using
+sudo apt-get install oracle-javaX-installer (where X => latest version). for ubuntu 16.04 on 8/14/2016, I ran sudo apt-get install oracle-java8-installer
+
+After we install Java, we can proceed with installation of eclipse
+
+Find if your system is 32 bit or 64 bit by running uname -i
+if out is 686 it is 32 bit. if output is x86_64 it is 64 bit. At the time of writing this tutorial, my system was 32 bit
+Other simple way is press windows key, type Details, select Details, Read OS type field
+
+Since I have 32 bit system, I downloaded Eclipse for 32 bit Ubuntu
+wget http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/neon/R/eclipse-php-neon-R-linux-gtk.tar.gz
+
+After downloading run the following commands
+
+sudo mv eclipse-php-neon-R-linux-gtk.tar.gz /opt/
+cd /opt/
+sudo tar -xvf eclipse-php-neon-R-linux-gtk.tar.gz
+sudo chown -R $USER:$USER eclipse (optional)
+sudo vi /usr/share/applications/eclipse.desktop
+Copy and paste the following in eclipse.desktop
+[Desktop Entry]
+Name=Eclipse
+Type=Application
+Exec=/opt/eclipse/eclipse
+Terminal=false
+Icon=/opt/eclipse/icon.xpm
+Comment=Integrated Development Environment
+NoDisplay=false
+Categories=Development;IDE;
+Name[en]=eclipse.desktop
+
+cd /usr/local/bin/
+sudo ln -s /opt/eclipse/eclipse
+
+Congrats - if everything runs well, eclipse will be successfully installed
