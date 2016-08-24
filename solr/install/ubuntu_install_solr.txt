@@ -1,7 +1,7 @@
 cd ~
 wget http://apache.claz.org/lucene/solr/6.1.0/solr-6.1.0.tgz
 tar xzf solr-6.1.0.tgz solr-6.1.0/bin/install_solr_service.sh --strip-components=2
-sudo bash ./install_solr_service.sh solr-6.1.0.tgz
+sudo bash ./install_solr_service.sh solr-6.1.0.tgz -u amit (amit = user who will own the solr files. if -u is not specified the script will create a user "solr" who will own the solr files)
 sudo service solr status
 
 To access solr, go to http://localhost:8983/solr
@@ -19,8 +19,10 @@ Separate Directory for Writable Files
 You should also separate writable Solr files into a different directory; by default, the installation script uses /var/solr, but you can override this location using the -d option. With this approach, the files in /opt/solr will remain untouched and all files that change while Solr is running will live under /var/solr.
 
 Create the Solr user
-Running Solr as root is not recommended for security reasons. Consequently, you should determine the username of a system user that will own all of the Solr files and the running Solr process. By default, the installation script will create a new user "solr", but you can override this setting using the -u option. If your organization has specific requirements for creating new user accounts, then you should create the user before running the script. The installation script will make the Solr user the owner of the /opt/solr and /var/solr directories.
+Running Solr as root is not recommended for security reasons. Consequently, you should determine the username of a system user that will own all of the Solr files and the running Solr process. By default, the installation script will create a new user "solr", but you can override this setting using the -u option. If your organization has specific requirements for creating new user accounts, then you should create the user before running the script. The installation script will make the solr user the owner of the /opt/solr and /var/solr directories.
 
+
+If you run the script without the -u option and new user "solr" gets created, you may have to do the following:
 If you are not logged in as "solr" user, you may not be allowed to run commands to create core, since the /var/solr directory is owned by solr user. I did not take a note of the password, that got created  for the solr user. So I logged in as root user and then reset the password of the solr user as follows
 sudo -s (logs you as root user)
 passwd solr (will ask you to create and confirm the new password for solr user)

@@ -1,4 +1,4 @@
-All these commands will be run in /opt/solr unless stated otherwise. Make sure you are logged in as a user that has permissions to modify /var/solr directory. I am logged as user "solr" since that was the user that got created when I installed solr. (Ref installation/ubuntu_install_solr.txt)
+All these commands will be run in /opt/solr unless stated otherwise. Make sure you are logged in as a user that has permissions to modify /var/solr directory.
 
 CREATE CORE
 bin/solr create -c gettingstarted (creates a core called gettingstarted)
