@@ -1,0 +1,7 @@
+All these commands will be run in /opt/solr unless stated otherwise
+
+bin/solr create -c gettingstarted (creates a core called gettingstarted)
+
+bin/post -c gettingstarted example/exampledocs/*.xml (indexes all the .xml files from example/exampledocs)
+
+bin/solr delete -c gettingstarted (deletes gettingstarted core)
