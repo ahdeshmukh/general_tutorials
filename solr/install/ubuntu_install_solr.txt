@@ -6,7 +6,7 @@ sudo service solr status
 
 To access solr, go to http://localhost:8983/solr
 
-Solr commands
+Solr commands (make sure the current user has sudo priviliges, otherwise you will get an error)
 start => sudo service solr start
 stop => sudo service solr stop
 restart => sudo service solr restart

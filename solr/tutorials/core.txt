@@ -1,7 +1,11 @@
-All these commands will be run in /opt/solr unless stated otherwise
+All these commands will be run in /opt/solr unless stated otherwise. Make sure you are logged in as a user that has permissions to modify /var/solr directory. I am logged as user "solr" since that was the user that got created when I installed solr. (Ref installation/ubuntu_install_solr.txt)
 
+CREATE CORE
 bin/solr create -c gettingstarted (creates a core called gettingstarted)
+This command will create a folder called gettingstarted inside /var/solr/data
 
+POST DATA
 bin/post -c gettingstarted example/exampledocs/*.xml (indexes all the .xml files from example/exampledocs)
 
+DELETE CORE
 bin/solr delete -c gettingstarted (deletes gettingstarted core)
