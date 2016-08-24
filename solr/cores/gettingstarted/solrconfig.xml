@@ -1256,6 +1256,10 @@
        
        See http://wiki.apache.org/solr/GuessingFieldTypes
     -->
+
+
+  <schemaFactory class="ClassicIndexSchemaFactory"/>
+
   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
     <!-- UUIDUpdateProcessorFactory will generate an id if none is present in the incoming document -->
     <processor class="solr.UUIDUpdateProcessorFactory" />
