@@ -1,0 +1,10 @@
+Make sure you are loged into an account that has sudo access. (Assumption: solr version is 6.1.0 and solr installation script created a user "solr" and a group "solr" which has access to /var/solr files)
+
+cd ~
+sudo service solr stop
+sudo rm -r /var/solr
+sudo rm -r /opt/solr-6.1.0
+sudo rm -r /opt/solr
+sudo rm /etc/init.d/solr
+sudo deluser --remove-home solr
+sudo deluser --group solr
