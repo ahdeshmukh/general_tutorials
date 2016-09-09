@@ -1,0 +1,5 @@
+Find which modules are enabled
+php -m
+
+Find if cURL module is enabled
+php -m | egrep -i curl

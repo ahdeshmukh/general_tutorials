@@ -1,0 +1,16 @@
+These commands have been tested on Ubuntu 32 bits. Most of them are expected to run for other Linux systems.
+
+Apache
+apachectl -v
+
+PHP
+php -v
+
+MySQL
+mysql -V
+
+JAVA
+java -version
+
+Node
+node -v
