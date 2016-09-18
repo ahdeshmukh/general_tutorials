@@ -1,7 +1,7 @@
 * cd ~
-* wget http://apache.claz.org/lucene/solr/6.1.0/solr-6.1.0.tgz
-* tar xzf solr-6.1.0.tgz solr-6.1.0/bin/install_solr_service.sh --strip-components=2
-* sudo bash ./install_solr_service.sh solr-6.1.0.tgz -u amit (amit = an already existing non-root user with sudo privileges who will own the solr files. if -u is not specified the script will create a user "solr" who will own the solr files)
+* wget http://apache.claz.org/lucene/solr/6.2.0/solr-6.2.0.tgz
+* tar xzf solr-6.2.0.tgz solr-6.2.0/bin/install_solr_service.sh --strip-components=2
+* sudo bash ./install_solr_service.sh solr-6.2.0.tgz -u amit (amit = an already existing non-root user with sudo privileges who will own the solr files. if -u is not specified the script will create a user "solr" who will own the solr files)
 * sudo service solr status
 
 To access solr, go to http://localhost:8983/solr
@@ -12,8 +12,8 @@ stop => sudo service solr stop
 restart => sudo service solr restart
 
 By default, the service installation script will extract the distribution archive into /opt/solr. The script creates a symlink called solr in /opt. The structure of /opt looks like 
-/opt/solr-6.1.0
-/opt/solr -> /opt/solr-6.1.0
+/opt/solr-6.2.0
+/opt/solr -> /opt/solr-6.2.0
 
 Separate Directory for Writable Files
 You should also separate writable Solr files into a different directory; by default, the installation script uses /var/solr, but you can override this location using the -d option. With this approach, the files in /opt/solr will remain untouched and all files that change while Solr is running will live under /var/solr.
