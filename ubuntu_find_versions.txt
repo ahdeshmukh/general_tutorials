@@ -14,3 +14,7 @@ java -version
 
 Node
 node -v
+
+Is current system 64 bit or 32 bit
+uname -i
+If output is 686 it is 32 bit. if output is x86_64 it is 64 bit.
