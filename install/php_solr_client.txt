@@ -1,0 +1,49 @@
+Ubuntu
+
+* sudo service apache2 stop
+
+For Ubuntu 16.04 first try these 2 steps
+* sudo apt-get update
+* sudo apt-get install php-solr
+
+If the above steps don't work, then do the below steps and repeat the above 2 steps. (do not forget to restart apache)
+
+* sudo apt-get -y install php-pear
+* sudo apt-get -y install php-dev
+* sudo apt-get -y install libcurl-dev
+ You may be asked to pick a specific version. I ran the following command
+* sudo apt-get -y install libcurl4-gnutls-dev
+* sudo apt-get -y install libxml2-dev
+* sudo pecl install -n solr (select the default options. just hit Enter if you get any questions from the system)
+
+
+* sudo service apache2 start
+
+
+=============================================================================
+
+Centos
+
+Check if PHP SOLR is enabled
+* php -m | egrep -i solr
+
+If not then do the below steps
+
+* sudo yum -y install php-pear
+* sudo yum -y install php-devel
+* sudo yum -y install curl-devel
+* sudo yum -y install libxml2-devel
+* sudo pecl install -n solr (select the default options. just hit Enter if you get any questions from the system)
+
+
+
+* sudo apachectl stop
+* sudo su
+* cd /etc/php.d
+* ls -ltr (check the max prefix number of each file, eg 20-*, 30-*, 40-*. In my case it was 40-*, so I created a new file with prefix 50-* issuing the below command)
+* vi 50-solr.ini and add extension = solr.so to the file and save. (see 40-json.ini for reference)
+* su - xpddev
+* sudo apachectl start
+
+Confirm PHP SOLR is enabled
+* php -m | egrep -i solr.
