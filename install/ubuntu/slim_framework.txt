@@ -1,0 +1,46 @@
+Install composer
+sudo apt install composer
+
+cd /var/www/html
+mkdir my-slim
+cd my-slim
+composer require slim/slim "^3.0"
+vi index.php
+Add the below code to index.php
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require 'vendor/autoload.php';
+
+$app = new \Slim\App;
+$app->get('/hello/{name}', function (Request $request, Response $response) {
+    $name = $request->getAttribute('name');
+    $response->getBody()->write("Hello awesome, $name");
+
+    return $response;
+});
+$app->run();
+
+Create virtual host my-slim.local
+
+Now if you access http://my-slim.local/index.php/hello/world, you should see "Hello awesome, world" in the browser
+
+To route all requests through index.php, so the url can look like http://my-slim.local/hello/world, do the following
+
+Make sure you enable rewrite module by doing
+sudo a2enmod rewrite
+cd /etc/apache2
+sudo vi apache2.conf
+For <Directory /var/www/>, set AllowOverride All and save the file
+Restart apache by doing sudo service apache2 restart
+
+cd /var/www/html/my-slim
+vi .htaccess # make sure it is at the same level as index.php
+Add the following the .htaccess
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+Now you can access your application using http://my-slim.local/index.php/hello/world

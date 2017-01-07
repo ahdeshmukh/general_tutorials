@@ -1,0 +1,1 @@
+These instructions are for 64 bit Ubuntu 16.04
