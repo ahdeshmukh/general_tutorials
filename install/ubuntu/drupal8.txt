@@ -1,0 +1,48 @@
+create database.
+I created a new user drupal8 with password 8, then created a database called drupal8 and granted all privileges on drupal8 database to drupal8 user by running
+GRANT ALL PRIVILEGES ON drupal8.* TO 'drupal8'@'localhost'
+
+
+sudo apt install drush # install drush
+cd /var/www/html
+sudo mkdir drupal8
+chown -R amit:amit drupal8
+cd drupal8
+drush dl drupal-8
+mv mv drupal-8.*/* .
+rm -rf drupal-8.*
+cd sites/default
+cp default.settings.php settings.php
+cp default.services.yml services.yml
+mkdir files/
+chmod a+w *
+
+
+Create virtual host for drupal8 folder. I have created http://drupal8.local
+
+http://drupal8.local. if things work fine you will see installation page
+
+Drupal was complaining I do not have gd module installed, so I ran sudo apt install php-gd
+
+
+After following setup I did
+cd /var/www/html/drupal8/sites/
+sudo chmod 555 default/
+cd default
+sudo chmod 444 settings.php
+
+
+I noticed that Drupal install was giving me a warning saying my clean urls were not enabled. But they were actually enabled. But I still tried doing sudo a2enmod rewrite # apache confirmed it was already enabled
+
+But I still got error when I would try to access pages like drupal8.local/admin/config
+
+Then I found an article saying a link like drupal8.local/index.php/admin/config will work. I gave it a try and it was working.
+
+So I created a .htaccess file in /var/www/html/drupal8 directory with the following content, and things seemed to work
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+
+// Todo: still i see the admin menu adds index.php to the link
