@@ -13,7 +13,8 @@ To start sudo service mongod start
 To stop sudo service mongod stop
 To restart sudo servie mongod restart
 
-To check if mongod service is running service mongod status
+To check if mongod service is running 
+service mongod status
 
 
 Uninstalling MongoDB
