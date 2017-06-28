@@ -1,0 +1,15 @@
+Get list of heroku apps by doing heroku apps
+
+I have an app called flask-deshmukh-ah, so I will assume I am creating a DB to be used by the app flask-deshmukh-ah. It will be added as an addon using  heroku addons:create heroku-postgresql:hobby-dev --app flask-deshmukh-ah
+
+To get the URI for newly created DB use heroku config --app flask-deshmukh-ah. Copy and save the URL in the text file. Mine looks like postgres://jbwtkjtqfsciru:ed4b24c3a11a07dd8a24c87040d26bac93b4e16e0fdbe48402b3830d9900c3ff@ec2-107-22-236-252.compute-1.amazonaws.com:5432/dfhmn6gfvo232m
+which can be interpreted as postgres://user:password@host:port/dbName
+user => jbwtkjtqfsciru
+password => ed4b24c3a11a07dd8a24c87040d26bac93b4e16e0fdbe48402b3830d9900c3ff
+host => ec2-107-22-236-252.compute-1.amazonaws.com
+port => 5432
+dbName => dfhmn6gfvo232m
+
+To create tables from a .sql file do psql -h ec2-107-22-236-252.compute-1.amazonaws.com -p 5432 -d dfhmn6gfvo232m -U jbwtkjtqfsciru -f path_to_sql_file
+
+To connect to postgres db on heroku through comand line, do psql -h ec2-107-22-236-252.compute-1.amazonaws.com -p 5432 -d dfhmn6gfvo232m -U jbwtkjtqfsciru
