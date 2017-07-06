@@ -1,0 +1,24 @@
+create a folder called flask
+
+cd flask
+
+mkdir files
+
+cd files
+
+git clone https://github.com/ahdeshmukh/udemy-flask.git .
+
+cd ..
+
+python -m venv virtual
+
+virtual\Scripts\activate
+
+pip list # will show only pip package
+
+pip install -r files\requirements.txt
+
+pip list # should show all packages from requirements.txt
+
+
+
