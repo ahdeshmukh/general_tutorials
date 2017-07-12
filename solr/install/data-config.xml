@@ -1,0 +1,22 @@
+<dataConfig>
+  <dataSource type="JdbcDataSource" 
+              driver="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://127.0.0.1:3306/solr_tutorial" 
+              user="root" 
+              password=""/>
+  <document>
+    <entity name="animalsFullImport" pk="id" 
+      query="SELECT a.id AS id, a.name AS name, a.description AS description, 
+            GROUP_CONCAT(t.name) AS tags 
+            FROM animals a
+            JOIN animals_tags at ON a.id= at.animal_id 
+            JOIN tags t ON at.tag_id = t.id 
+            GROUP BY a.id" 
+      >
+      <field column="id" name="id"/>
+      <field column="name" name="name" />
+      <field column="name" name="name" />
+      <field column="tags" name="tags" splitBy = "," />
+    </entity>
+  </document>
+</dataConfig>
