@@ -1,0 +1,57 @@
+converting standalone mongod instance into replicaset.
+
+We will have  the following configuration in the replicaset named rs1
+Primary - port 27017
+Secondary - port 27018
+Arbiter - port 27019
+
+make sure the default mongod instance is running.If not type
+sudo service mongod start
+
+Type the following commands in the shell
+mongo
+use admin
+db.runCommand({getCmdLineOpts:1}) # look for the config file path. mostly it will be /etc/mongod.conf
+vi /etc/mongod.conf
+
+Setup the folders to store data for mongo instances running on different ports
+#check the storage dbPath in /etc/mongod.conf .mine was /var/lib/mongodb
+sudo service mongod stop
+cd /var/lib
+sudo cp mongodb mongodb_bak
+cd monogodb
+sudo rm -rf * # we will start fresh
+sudo mkdir rs1 #rs1 will be the name of my replicaset
+sudo chown mongodb:mongodb -R rs1
+cd rs1
+sudo mkdir 27017 27018 27019
+sudo chown mongodb:mongodb -R 27017 27018 27019
+
+setup the folders to store logs for mongo instances running on different ports
+#check the log path in /etc/mongod.conf .mine was /var/log/mongodb/mongod.log
+cd /var/log/mongodb
+sudo mkdir rs1
+cd rs1
+sudo mkdir 27017 27018 27019
+sudo touch 27017/mongod.log 27018/mongod.log 27019/mogod.log
+cd ..
+sudo chown mongodb:mongodb -R rs1
+
+Run the 3 mongod instances as follows
+sudo mongod --dbpath /var/lib/mongodb/rs1/27017 --logpath "/var/lib/mongodb/rs1/27017/mongod.log" --port 27017 --replSet "rs1" --smallfiles --oplogSize 50 &
+sudo mongod --dbpath /var/lib/mongodb/rs1/27018 --logpath "/var/lib/mongodb/rs1/27018/mongod.log" --port 27018 --replSet "rs1" --smallfiles --oplogSize 50 &
+sudo mongod --dbpath /var/lib/mongodb/rs1/27019 --logpath "/var/lib/mongodb/rs1/27019/mongod.log" --port 27019 --replSet "rs1" --smallfiles --oplogSize 50 &
+
+Setting up replicaet and adding members
+Go into the mongo shell by typing
+mongo --port 27017
+rs.initiate()
+cfg = rs.config()
+cfg.members[0].priority = 2 # makes this node as a primary
+rs.reconfig(cfg)
+rs.add("amit-VirtualBox:27018")
+rs.addArb("amit-VirtualBox:27019")
+
+
+
+
