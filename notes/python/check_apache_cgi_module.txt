@@ -1,0 +1,166 @@
+Check if apache cgi module is enabled or not by running
+apachectl -M | grep cgi # if not enabled, do so by running sudo a2enmod cgi and restart apache
+
+First make sure your apache can execute python script. To do this we are going to create a new folder in /var/www/html called python with an index.py file.
+
+cd /var/www/html
+mkdir python
+cd python
+vi index.py # add below lines to index.py and save
+/* Add to index.py */
+
+#! /usr/bin/python3
+import datetime
+
+print("Content-type: text/html")
+print()
+print("<h1>First python script</h1>")
+print(datetime.datetime.now())
+
+/* End - Add to index.py */
+
+chmod 777 index.py
+
+cd /etc/apache2/sites-available
+sudo vi python.local.conf # add below lines to python.local.conf and save
+/* Add to python.local.conf */
+
+<VirtualHost *:80>
+
+	ServerAdmin admin@example.com
+	ServerName python.local
+	DocumentRoot /var/www/html/python
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	<Directory /var/www/html/python>
+		DirectoryIndex index.py
+  		Require all granted
+  		Options ExecCGI
+		AddHandler cgi-script .py
+	</Directory>
+
+
+</VirtualHost>
+
+/* End - Add to python.local.conf */
+
+sudo a2ensite python.local.conf
+sudo service apache2 restart
+sudo vi /etc/hosts and add 127.0.0.1 python.local and save
+
+If everything goes fine, you can reach your webpage successfully at http://python.local
+
+
+This is not working for now
+
+Installing django
+sudo apt-get install python3-pip
+pip3 --version # just to confirm
+sudo apt-get install libapache2-mod-wsgi-py3
+sudo a2enmod wsgi
+sudo service apache2 restart
+cd /var/www/html
+mkdir django-projects
+cd django-projects
+python3 -m venv djangular-env
+cd djangular-env
+source bin/activate # activate virtual environment. you should see name of virtual environment in () at beginning of command prompt
+pip3 install django
+pip3 install mysqlclient # i was getting error, so had to run sudo apt-get install libmysqlclient-dev
+django-admin.py startproject djangular
+cd djangular/djangular
+
+vi settings.py
+make sure your DATABASES looks like the below
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangular',
+        'USER': 'django',
+        'PASSWORD': 'password',
+        'HOST': 'localhost'
+    }
+}
+cd ..
+python3 manage.py runserver # this will run a built in server. You can access website at localhost:8000
+
+
+Setting up Django on Apache and communicating with MySQL on Ubuntu 16.04
+
+Ref: https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-apache-and-mod_wsgi-on-ubuntu-14-04
+
+Ubuntu comes with python 2.x and python 3.x
+running python command runs python 2.x version.
+try python --version => you will get 2.x.x
+
+If we want to run python 3 we need to run
+python3 --version
+
+We will keep python 2.x untouched
+
+Install pip for python 3
+sudo apt-get install python3-pip
+
+To make sure pip is installed for python 3
+run pip3 --version
+
+Check if apache cgi module is enabled or not by running
+apachectl -M | grep cgi # if not enabled, do so by running sudo a2enmod cgi and restart apache
+
+First install apache wsgi module and enable it or make sure it is installed and enabled. This is necessary for apache to run python code
+sudo apt-get install libapache2-mod-wsgi-py3
+
+To make sure python is able to communicate with the mysql database
+sudo apt-get install python3-mysqldb 
+
+sudo apt-get install python3-venv
+
+cd ~
+
+mkdir django-projects
+
+cd django-projects
+
+python3 -m venv djangular-env # will create djangular-env folder
+
+cd djangular-env
+
+source bin/activate # will activate djangular-env denoted by (djangular-env) in the command prompt
+
+pip3 install django
+pip3 install mysqlclient # i was getting error, so had to run sudo apt-get install libmysqlclient-dev
+
+django-admin.py startproject djangular
+
+cd djangular/djangular
+
+vi settings.py
+make sure your DATABASES looks like the below
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangular',
+        'USER': 'django',
+        'PASSWORD': 'password',
+        'HOST': 'localhost'
+    }
+}
+
+add STATIC_ROOT = os.path.join(BASE_DIR, "static/") to bottom. Save and exit
+
+cd ..
+python3 manage.py runserver # this will run a built in server. You can access website at localhost:8000
+
+./manage.py makemigrations
+./manage.py migrate
+
+./manage.py createsuperuser # i selected user => admin, password => djangular (cannot select password), and email => admin@localhost.com
+./manage.py collectstatic # collect all of the static content into the directory location we configured
+
+You can access at localhost:8000
+To login as admin go to localhost:8000/admin and login with credentials given above
+
+For now we are done with django part, so deactivate the environment using
+deactivate

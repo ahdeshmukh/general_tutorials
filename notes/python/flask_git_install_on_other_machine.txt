@@ -19,6 +19,3 @@ pip list # will show only pip package
 pip install -r files\requirements.txt
 
 pip list # should show all packages from requirements.txt
-
-
-

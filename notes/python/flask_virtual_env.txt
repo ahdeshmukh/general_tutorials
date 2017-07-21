@@ -1,0 +1,10 @@
+Assumptions
+Installation on Windows (though other systems must be similar)
+Python is up and running on your system
+Installing Flask in a folder called Desktop\flask-trial
+
+cd Desktop\flask-trial
+python -m venv virtual
+cd virtual\Scripts
+activate
+pip list // show list of python packages in the virtual environment
