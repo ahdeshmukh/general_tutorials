@@ -17,5 +17,5 @@ Virtual environment is created in the flask folder using python -m venv virtual,
 10) Create a file and name it Procfile (make sure it does not have any extensions)
 11) Open Procfile using notepad and add web: gunicorn _init_:app (it tells gunicorn to run _init_.py file and app is the name of variable we used to declare Flask app = Flask(__name__) )
 12) Create file runtime.txt and add python-3.6.1 to it. It tells heroku which version of python to run. At the time of writing this, Heroku supported 3.6.1 (https://devcenter.heroku.com/articles/python-support#supported-python-runtimes)
-13) Since I had already pushed my code to a github repository, I had to add Heroku app's git repository that was created when I created the app using heroku git:remote -a flask-deshmukh-ah
+13) Since I had already pushed my code to a github repository, I had to add Heroku app's git repository using heroku git:remote -a flask-deshmukh-ah. This repository was created when I created the app
 14) push to heroku using git push heroku master
