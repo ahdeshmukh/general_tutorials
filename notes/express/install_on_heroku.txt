@@ -1,0 +1,36 @@
+Deploy express to Heroku
+
+create a folder called my-express
+cd my-express
+git clone 
+npm init -y #creates package.json with default options
+npm install express --save
+vi .gitignore # add node_modules/ to gitignore and save
+touch server.js
+mkdir public
+cd public
+touch index.html
+
+In an editor open server.js and add following code
+const express = require('express')
+const app = express()
+
+app.use(express.static('public')) // use public folder for static file
+
+app.listen(process.env.PORT || 8080, () => console.log('All is ok'))
+
+In public/index.html, add following code
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Hello World from Express</h1>
+
+</body>
+</html>
+
+cd my-express
+node server.js
+
+If everything goes well you should see the message Hello World from Express at localhost:8080
+
